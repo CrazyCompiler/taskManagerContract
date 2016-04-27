@@ -6,11 +6,11 @@ message addTask{
 }
 
 message updatePriority{
-    required string taskId = 3;
+    required int32 taskId = 3;
     required string priority = 4;
 }
 
 message updateTaskDescription{
-    required string taskId = 5;
+    required int32 taskId = 5;
     required string data = 6;
 }
