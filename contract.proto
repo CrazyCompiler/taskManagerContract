@@ -14,3 +14,7 @@ message updateTaskDescription{
     required int32 taskId = 5;
     required string data = 6;
 }
+
+message uploadCsvData{
+    required string csvData = 7;
+}
