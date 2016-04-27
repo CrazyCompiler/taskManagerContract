@@ -1,0 +1,16 @@
+package contract;
+
+message addTask{
+    required string task = 1;
+    required string priority = 2;
+}
+
+message updatePriority{
+    required string taskId = 3;
+    required string priority = 4;
+}
+
+message updateTaskDescription{
+    required string taskId = 5;
+    required string data = 6;
+}
