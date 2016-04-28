@@ -7,7 +7,7 @@ message task{
 }
 
 message response{
-    optional string data = 1;
+    optional bytes data = 1;
     optional error err = 2;
 }
 
