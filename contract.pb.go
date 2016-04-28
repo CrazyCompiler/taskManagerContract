@@ -9,9 +9,9 @@ It is generated from these files:
 	contract.proto
 
 It has these top-level messages:
-	AddTask
-	UpdatePriority
-	UpdateTaskDescription
+	Task
+	Response
+	Error
 	UploadCsvData
 */
 package contract
@@ -29,83 +29,91 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 const _ = proto.ProtoPackageIsVersion1
 
-type AddTask struct {
-	Task             *string `protobuf:"bytes,1,req,name=task" json:"task,omitempty"`
-	Priority         *string `protobuf:"bytes,2,req,name=priority" json:"priority,omitempty"`
+type Task struct {
+	Task             *string `protobuf:"bytes,1,opt,name=task" json:"task,omitempty"`
+	Priority         *string `protobuf:"bytes,2,opt,name=priority" json:"priority,omitempty"`
+	TaskId           *int32  `protobuf:"varint,3,opt,name=taskId" json:"taskId,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *AddTask) Reset()                    { *m = AddTask{} }
-func (m *AddTask) String() string            { return proto.CompactTextString(m) }
-func (*AddTask) ProtoMessage()               {}
-func (*AddTask) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *Task) Reset()                    { *m = Task{} }
+func (m *Task) String() string            { return proto.CompactTextString(m) }
+func (*Task) ProtoMessage()               {}
+func (*Task) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *AddTask) GetTask() string {
+func (m *Task) GetTask() string {
 	if m != nil && m.Task != nil {
 		return *m.Task
 	}
 	return ""
 }
 
-func (m *AddTask) GetPriority() string {
+func (m *Task) GetPriority() string {
 	if m != nil && m.Priority != nil {
 		return *m.Priority
 	}
 	return ""
 }
 
-type UpdatePriority struct {
-	TaskId           *int32  `protobuf:"varint,3,req,name=taskId" json:"taskId,omitempty"`
-	Priority         *string `protobuf:"bytes,4,req,name=priority" json:"priority,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
-}
-
-func (m *UpdatePriority) Reset()                    { *m = UpdatePriority{} }
-func (m *UpdatePriority) String() string            { return proto.CompactTextString(m) }
-func (*UpdatePriority) ProtoMessage()               {}
-func (*UpdatePriority) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
-
-func (m *UpdatePriority) GetTaskId() int32 {
+func (m *Task) GetTaskId() int32 {
 	if m != nil && m.TaskId != nil {
 		return *m.TaskId
 	}
 	return 0
 }
 
-func (m *UpdatePriority) GetPriority() string {
-	if m != nil && m.Priority != nil {
-		return *m.Priority
-	}
-	return ""
-}
-
-type UpdateTaskDescription struct {
-	TaskId           *int32  `protobuf:"varint,5,req,name=taskId" json:"taskId,omitempty"`
-	Data             *string `protobuf:"bytes,6,req,name=data" json:"data,omitempty"`
+type Response struct {
+	Data             *string `protobuf:"bytes,1,opt,name=data" json:"data,omitempty"`
+	Err              *Error  `protobuf:"bytes,2,opt,name=err" json:"err,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *UpdateTaskDescription) Reset()                    { *m = UpdateTaskDescription{} }
-func (m *UpdateTaskDescription) String() string            { return proto.CompactTextString(m) }
-func (*UpdateTaskDescription) ProtoMessage()               {}
-func (*UpdateTaskDescription) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *Response) Reset()                    { *m = Response{} }
+func (m *Response) String() string            { return proto.CompactTextString(m) }
+func (*Response) ProtoMessage()               {}
+func (*Response) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
-func (m *UpdateTaskDescription) GetTaskId() int32 {
-	if m != nil && m.TaskId != nil {
-		return *m.TaskId
-	}
-	return 0
-}
-
-func (m *UpdateTaskDescription) GetData() string {
+func (m *Response) GetData() string {
 	if m != nil && m.Data != nil {
 		return *m.Data
 	}
 	return ""
 }
 
+func (m *Response) GetErr() *Error {
+	if m != nil {
+		return m.Err
+	}
+	return nil
+}
+
+type Error struct {
+	Status           *int32  `protobuf:"varint,1,req,name=status" json:"status,omitempty"`
+	Description      *string `protobuf:"bytes,2,req,name=description" json:"description,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *Error) Reset()                    { *m = Error{} }
+func (m *Error) String() string            { return proto.CompactTextString(m) }
+func (*Error) ProtoMessage()               {}
+func (*Error) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+
+func (m *Error) GetStatus() int32 {
+	if m != nil && m.Status != nil {
+		return *m.Status
+	}
+	return 0
+}
+
+func (m *Error) GetDescription() string {
+	if m != nil && m.Description != nil {
+		return *m.Description
+	}
+	return ""
+}
+
 type UploadCsvData struct {
-	CsvData          *string `protobuf:"bytes,7,req,name=csvData" json:"csvData,omitempty"`
+	CsvData          *string `protobuf:"bytes,1,req,name=csvData" json:"csvData,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
@@ -122,23 +130,24 @@ func (m *UploadCsvData) GetCsvData() string {
 }
 
 func init() {
-	proto.RegisterType((*AddTask)(nil), "contract.addTask")
-	proto.RegisterType((*UpdatePriority)(nil), "contract.updatePriority")
-	proto.RegisterType((*UpdateTaskDescription)(nil), "contract.updateTaskDescription")
+	proto.RegisterType((*Task)(nil), "contract.task")
+	proto.RegisterType((*Response)(nil), "contract.response")
+	proto.RegisterType((*Error)(nil), "contract.error")
 	proto.RegisterType((*UploadCsvData)(nil), "contract.uploadCsvData")
 }
 
 var fileDescriptor0 = []byte{
-	// 172 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xe2, 0x4b, 0xce, 0xcf, 0x2b,
-	0x29, 0x4a, 0x4c, 0x2e, 0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x80, 0xf1, 0x95, 0x34,
-	0xb9, 0xd8, 0x13, 0x53, 0x52, 0x42, 0x12, 0x8b, 0xb3, 0x85, 0x78, 0xb8, 0x58, 0x4a, 0x80, 0xb4,
-	0x04, 0xa3, 0x02, 0x93, 0x06, 0xa7, 0x90, 0x00, 0x17, 0x47, 0x41, 0x51, 0x66, 0x7e, 0x51, 0x66,
-	0x49, 0xa5, 0x04, 0x13, 0x48, 0x44, 0xc9, 0x88, 0x8b, 0xaf, 0xb4, 0x20, 0x25, 0xb1, 0x24, 0x35,
-	0x00, 0x2a, 0x2e, 0xc4, 0xc7, 0xc5, 0x06, 0xd2, 0xe1, 0x99, 0x22, 0xc1, 0x0c, 0x54, 0xc1, 0x8a,
-	0xa2, 0x87, 0x05, 0xac, 0xc7, 0x94, 0x4b, 0x14, 0xa2, 0x07, 0x64, 0x83, 0x4b, 0x6a, 0x71, 0x72,
-	0x51, 0x66, 0x41, 0x49, 0x66, 0x7e, 0x1e, 0x92, 0x56, 0x56, 0xb0, 0x56, 0xa0, 0xe5, 0x40, 0x65,
-	0x89, 0x12, 0x6c, 0x60, 0x6d, 0x0a, 0x5c, 0xbc, 0xa5, 0x05, 0x39, 0xf9, 0x89, 0x29, 0xce, 0xc5,
-	0x65, 0x2e, 0x40, 0x61, 0x21, 0x7e, 0x2e, 0xf6, 0x64, 0x08, 0x53, 0x82, 0x1d, 0xa4, 0x02, 0x10,
-	0x00, 0x00, 0xff, 0xff, 0xcc, 0xe8, 0x73, 0x3c, 0xd2, 0x00, 0x00, 0x00,
+	// 186 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x3c, 0xcd, 0x31, 0xaf, 0x82, 0x30,
+	0x10, 0x07, 0xf0, 0x00, 0x8f, 0xf7, 0xe0, 0x78, 0x82, 0xa9, 0x0b, 0x83, 0x03, 0x61, 0x62, 0x30,
+	0x0c, 0x0e, 0x7e, 0x01, 0x5d, 0xfc, 0x18, 0x4d, 0xdb, 0xa1, 0xd1, 0x70, 0xcd, 0xf5, 0x30, 0xf1,
+	0xdb, 0x5b, 0x8a, 0x3a, 0xf5, 0xee, 0xdf, 0xfc, 0xee, 0x0f, 0xb5, 0xc2, 0x89, 0x49, 0x2a, 0x1e,
+	0x1d, 0x21, 0xa3, 0x28, 0x3e, 0x7b, 0x7f, 0x82, 0x1f, 0x96, 0xfe, 0x26, 0xfe, 0xd7, 0xb7, 0x4d,
+	0xba, 0x64, 0x28, 0xc5, 0x16, 0x0a, 0x47, 0x16, 0xc9, 0xf2, 0xb3, 0x4d, 0x63, 0x52, 0xc3, 0xef,
+	0xf2, 0x7f, 0xd5, 0x6d, 0x16, 0xf6, 0x3c, 0xb8, 0x82, 0x8c, 0x77, 0x38, 0x79, 0xb3, 0x58, 0x2d,
+	0x59, 0xbe, 0xed, 0x1e, 0x32, 0x43, 0x14, 0x59, 0x75, 0x6c, 0xc6, 0x6f, 0x73, 0x08, 0x91, 0xfa,
+	0x03, 0xe4, 0x71, 0x58, 0x0e, 0x7a, 0x96, 0x3c, 0xfb, 0xc0, 0xd2, 0x21, 0x17, 0x3b, 0xa8, 0xb4,
+	0xf1, 0x8a, 0xac, 0x63, 0x8b, 0x53, 0xe0, 0xe9, 0x50, 0xf6, 0x1d, 0x6c, 0x66, 0x77, 0x47, 0xa9,
+	0xcf, 0xfe, 0x71, 0x09, 0x15, 0xa2, 0x81, 0x3f, 0xb5, 0x8e, 0x91, 0x95, 0xaf, 0x00, 0x00, 0x00,
+	0xff, 0xff, 0x54, 0xb0, 0xbd, 0x84, 0xda, 0x00, 0x00, 0x00,
 }

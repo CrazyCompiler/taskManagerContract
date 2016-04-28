@@ -1,20 +1,21 @@
 package contract;
 
-message addTask{
-    required string task = 1;
-    required string priority = 2;
+message task{
+    optional string task = 1;
+    optional string priority = 2;
+    optional int32 taskId = 3;
 }
 
-message updatePriority{
-    required int32 taskId = 3;
-    required string priority = 4;
+message response{
+    optional string data = 1;
+    optional error err = 2;
 }
 
-message updateTaskDescription{
-    required int32 taskId = 5;
-    required string data = 6;
+message error{
+    required int32 status = 1;
+    required string description = 2;
 }
 
 message uploadCsvData{
-    required string csvData = 7;
+    required string csvData = 1;
 }
