@@ -1,25 +1,21 @@
 package contract;
 
 message task{
-    optional string task = 1;
-    optional string priority = 2;
-    optional int32 taskId = 3;
+        optional string task = 1;
+        optional string priority = 2;
+        optional int32 taskId = 3;
 }
 
 message response{
-    optional bytes data = 1;
-    optional error err = 2;
+        optional bytes data = 1;
+        optional error err = 2;
 }
 
 message error{
-    optional int32 status = 1;
-    optional string description = 2;
+        optional int32 status = 1;
+        optional string description = 2;
 }
 
-message uploadCsvData{
-    optional string csvData = 1;
-}
-
-message getTasks{
-    optional bytes bytedata = 1;
+message upload{
+        optional bytes data = 1;
 }
