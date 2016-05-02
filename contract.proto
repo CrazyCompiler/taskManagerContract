@@ -20,6 +20,6 @@ message uploadCsvData{
     required string csvData = 1;
 }
 
-message download{
+message getTasks{
     required bytes bytedata = 1;
 }
