@@ -19,3 +19,7 @@ message error{
 message uploadCsvData{
     required string csvData = 1;
 }
+
+message download{
+    required bytes bytedata = 1;
+}
